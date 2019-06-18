@@ -35,6 +35,7 @@
         }
     }
  
+ For details [click here](https://github.com/arun786/springwithdynamodb/blob/master/HowToConnectToDynamoDB.md)
 
 ### DAO Layer
 
