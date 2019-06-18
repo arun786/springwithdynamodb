@@ -88,6 +88,8 @@
 
 ## Using Hibernate 
 
+   for details [click here](https://github.com/arun786/springwithdynamodb/blob/master/HowToConnecToDynamoDBUsingORM.md)
+
 
     package com.arun.springwithdynamodb.model;
     
