@@ -29,6 +29,10 @@ public class DbConfig {
     }
 
 
+    /**
+     * This is used for ORM tool such as Hibernate
+     * @return
+     */
     @Bean
     public DynamoDBMapper getDynamoDBClient() {
         AmazonDynamoDB dynamoDb = getDynamoDb();
