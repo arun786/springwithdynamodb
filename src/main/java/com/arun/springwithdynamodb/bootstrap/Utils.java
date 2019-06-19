@@ -12,6 +12,7 @@ public class Utils {
         CreateTableRequest createTableRequest = dynamoDBMapper.generateCreateTableRequest(itemClass);
         createTableRequest.withProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
 
+        //for gsi, we need to provide provisioned throughput as it is not part of the main table
         if (!CollectionUtils.isEmpty(createTableRequest.getGlobalSecondaryIndexes())) {
             createTableRequest.getGlobalSecondaryIndexes().forEach(gsi -> {
                 gsi.withProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
@@ -19,8 +20,9 @@ public class Utils {
             });
         }
 
+        //for lsi, we dont need to provide provisioned throughput as it is part of the main table
         if (!CollectionUtils.isEmpty(createTableRequest.getLocalSecondaryIndexes())) {
-            createTableRequest.getGlobalSecondaryIndexes().forEach(lsi ->
+            createTableRequest.getLocalSecondaryIndexes().forEach(lsi ->
                     lsi.withProjection(new Projection().withProjectionType("ALL")));
         }
 
@@ -62,4 +64,5 @@ public class Utils {
         }
 
     }
+
 }
