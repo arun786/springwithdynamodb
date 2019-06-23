@@ -52,8 +52,42 @@ public class CommentController {
 
 
     @GetMapping("/comment/v1/comments/all")
-    public ResponseEntity<List<Message>> getAll(){
+    public ResponseEntity<List<Message>> getAll() {
         List<Message> getAll = commentService.getAll();
         return new ResponseEntity<>(getAll, HttpStatus.OK);
     }
+
+
+    @GetMapping("/comment/v1/comments/{itemId}")
+    public ResponseEntity<List<Message>> getAllBaseOnItemId(@PathVariable String itemId) {
+        List<Message> getAll = commentService.getAllBasedOnItem(itemId);
+        return new ResponseEntity<>(getAll, HttpStatus.OK);
+    }
+
+    @GetMapping("/comment/v1/comments/specific")
+    public ResponseEntity<List<Message>> getItemMessageGreaterThanSpecifiedRate(@RequestParam String itemId,
+                                                                                @RequestParam Integer rating
+    ) {
+        List<Message> getAll = commentService.getItemMessageGreaterThanSpecifiedRate(itemId, rating);
+        return new ResponseEntity<>(getAll, HttpStatus.OK);
+    }
+
+    @GetMapping("/comment/v1/comments/specific/{user}")
+    public ResponseEntity<List<Message>> getAllCommentsByAUser(@PathVariable String user) {
+
+        List<Message> allMessageBasedOnUser = commentService.getAllMessageBasedOnUser(user);
+        return new ResponseEntity<>(allMessageBasedOnUser, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/comment/v1/comments/specific/{user}/rating")
+    public ResponseEntity<List<Message>> getMessagesForAUserGreaterThanRating(@PathVariable String user,
+                                                                              @RequestParam Integer rating) {
+
+        List<Message> allMessageForUserForRatingGreater = commentService.getAllMessageForUserForRatingGreater(user, rating);
+        return new ResponseEntity<>(allMessageForUserForRatingGreater, HttpStatus.OK);
+
+    }
+
+
 }

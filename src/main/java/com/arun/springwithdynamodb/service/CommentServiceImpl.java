@@ -41,4 +41,24 @@ public class CommentServiceImpl implements CommentService {
     public List<Message> getAll() {
         return commentDao.getAll();
     }
+
+    @Override
+    public List<Message> getAllBasedOnItem(String itemId) {
+        return commentDao.getAllBasedOnItem(itemId);
+    }
+
+    @Override
+    public List<Message> getItemMessageGreaterThanSpecifiedRate(String itemId, int rating) {
+        return commentDao.getItemMessageGreaterThanSpecifiedRate(itemId, rating);
+    }
+
+    @Override
+    public List<Message> getAllMessageBasedOnUser(String user) {
+        return commentDao.getAllMessageBasedOnUser(user);
+    }
+
+    @Override
+    public List<Message> getAllMessageForUserForRatingGreater(String user, Integer rating) {
+        return commentDao.getAllMessageForUserForRatingGreater(user, rating);
+    }
 }
