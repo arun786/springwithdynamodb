@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class CommentController {
 
@@ -38,5 +40,20 @@ public class CommentController {
         Message put = commentService.get(itemId, messageId);
         return new ResponseEntity<>(put, HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("/comment/v1/comments")
+    public ResponseEntity<HttpStatus> delete(@RequestParam String itemId,
+                                             @RequestParam String messageId) {
+        commentService.delete(itemId, messageId);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+
+    @GetMapping("/comment/v1/comments/all")
+    public ResponseEntity<List<Message>> getAll(){
+        List<Message> getAll = commentService.getAll();
+        return new ResponseEntity<>(getAll, HttpStatus.OK);
     }
 }

@@ -5,6 +5,8 @@ import com.arun.springwithdynamodb.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -28,5 +30,15 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Message get(String itemId, String messageId) {
         return commentDao.get(itemId, messageId);
+    }
+
+    @Override
+    public void delete(String itemId, String messageId) {
+        commentDao.delete(itemId, messageId);
+    }
+
+    @Override
+    public List<Message> getAll() {
+        return commentDao.getAll();
     }
 }

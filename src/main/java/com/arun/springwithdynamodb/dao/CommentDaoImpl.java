@@ -2,11 +2,14 @@ package com.arun.springwithdynamodb.dao;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.arun.springwithdynamodb.bootstrap.Utils;
 import com.arun.springwithdynamodb.model.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @Slf4j
@@ -42,5 +45,18 @@ public class CommentDaoImpl implements CommentDao {
         message.setItemId(itemId);
         message.setMessageId(messageId);
         return dynamoDBMapper.load(message);
+    }
+
+    @Override
+    public void delete(String itemId, String messageId) {
+        Message message = new Message();
+        message.setMessageId(messageId);
+        message.setItemId(itemId);
+        dynamoDBMapper.delete(message);
+    }
+
+    @Override
+    public List<Message> getAll() {
+        return dynamoDBMapper.scan(Message.class, new DynamoDBScanExpression());
     }
 }
