@@ -17,4 +17,11 @@ public class User {
     private String age;
     @DynamoDBAttribute
     private String address;
+
+    /**
+     * This is for optimistic locking
+     */
+    @DynamoDBVersionAttribute
+    private Long version;
+
 }
