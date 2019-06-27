@@ -3,6 +3,7 @@ package com.arun.springwithdynamodb.dao;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.glue.model.ConditionCheckFailureException;
 import com.arun.springwithdynamodb.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,13 +46,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     private void OptimisticLocking(User user) {
-
         User user1 = getUser(user.getUserId());
         User user2 = getUser(user.getUserId());
 
         updateAge(user1);
         updateAddress(user2);
-
     }
 
     private void updateAge(User user1) {
@@ -60,9 +59,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     private void updateAddress(User user2) {
-
-        user2.setAddress("This is user 2 address");
-        dynamoDBMapper.save(user2);
+        while (true) {
+            try {
+                user2.setAddress("This is user 2 address");
+                dynamoDBMapper.save(user2);
+                break;
+            } catch (ConditionCheckFailureException c) {
+                user2 = getUser(user2.getUserId());
+            }
+        }
     }
 
 
